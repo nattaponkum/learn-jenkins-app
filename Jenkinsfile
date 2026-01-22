@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'npm install'
+                sh 'npm ci'
                 sh 'npm run build'
             }
         }
