@@ -47,10 +47,10 @@ pipeline {
       steps {
         container('my-builder') {
           sh 'npm install -g vercel@latest'
-          // ตั้งค่า Vercel CLI
+          // Deploy using token-only (non-interactive)
           sh '''
-            vercel login --token $VERCEL_TOKEN
-            vercel link $VERCEL_PROJECT_NAME --token $VERCEL_TOKEN
+            vercel link --project $VERCEL_PROJECT_NAME --token $VERCEL_TOKEN --yes
+            vercel --token $VERCEL_TOKEN --prod --confirm
           '''
         }
       }
