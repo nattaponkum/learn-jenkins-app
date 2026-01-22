@@ -1,5 +1,9 @@
 pipeline {
   agent {
+    environment {
+      VERCEL_PROJECT_NAME = 'learn-jenkins-app'
+      VERCEL_TOKEN = credentials('vercel-token') // ดึงจาก Jenkins
+    }
     kubernetes {
       // This YAML defines the "Docker Container" you want to use
       yaml '''
@@ -38,6 +42,21 @@ pipeline {
           sh 'npm run test'
         }
       }
+    }
+    stage('Deploy') {
+      steps {
+        // ติดตั้ง Vercel CLI แบบ local
+        sh 'npm install vercel -g'
+        // สั่ง Deploy ไปยัง Vercel 
+        // ใช้ --prebuilt เพื่อระบุว่าไฟล์ในโฟลเดอร์ build/ ได้ถูกสร้างไว้แล้ว
+        sh './node_modules/.bin/vercel deploy --prod --prebuilt'
+      }
+    }
+
+  }
+  post {
+    always {
+      junit 'test-results/junit.xml'
     }
   }
 }
