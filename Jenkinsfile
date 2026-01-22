@@ -12,7 +12,7 @@ pipeline {
         spec:
           containers:
           - name: my-builder  # We will refer to this name later
-            image: node:18-alpine
+            image: node:20-alpine
             command:
             - cat
             tty: true
