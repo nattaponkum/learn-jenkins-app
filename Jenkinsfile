@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18-alpine' // ใช้ Image นี้ที่มี Node.js มาให้แล้ว
-            reuseNode true 
-        }
-    }
+    agent any
     stages {
         stage('Test npm') {
             agent {
